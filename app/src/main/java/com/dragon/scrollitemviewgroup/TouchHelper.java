@@ -1,6 +1,7 @@
 package com.dragon.scrollitemviewgroup;
 
 import android.os.Handler;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewConfiguration;
@@ -31,6 +32,7 @@ public class TouchHelper {
     Runnable runnable = new Runnable() {
         @Override
         public void run() {
+            Log.e("dragon","running ---------------");
             if(!scroller.isFinished()){
                 computeScroll();
             }
@@ -69,7 +71,8 @@ public class TouchHelper {
         int action = event.getActionMasked();
         switch (action) {
             case MotionEvent.ACTION_DOWN:
-                break;
+                return false;
+//                break;
             case MotionEvent.ACTION_MOVE: {
                 float currentX = event.getX();
                 float offsetX = currentX - lastX;

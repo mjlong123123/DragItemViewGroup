@@ -26,7 +26,8 @@
             android:gravity="center"
             android:text="main item"
             android:textColor="#ffffffff"
-            android:padding="20dp"/>
+            android:padding="20dp"
+            android:onClick="onClickItem"/>
 
         <TextView
             android:layout_width="wrap_content"
@@ -35,6 +36,7 @@
             android:gravity="center"
             android:textColor="#ffffffff"
             android:padding="20dp"
-            android:text="menu item"/>
+            android:text="menu item"
+            android:onClick="onClickMenu"/>
     </com.dragon.scrollitemviewgroup.DragItemViewGroup>
 </android.support.constraint.ConstraintLayout>
