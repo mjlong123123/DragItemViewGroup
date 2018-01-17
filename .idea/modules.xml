@@ -3,6 +3,7 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/DragItemViewGroup.iml" filepath="$PROJECT_DIR$/DragItemViewGroup.iml" />
+      <module fileurl="file://$PROJECT_DIR$/ScrollItemViewGroup.iml" filepath="$PROJECT_DIR$/ScrollItemViewGroup.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
     </modules>
   </component>

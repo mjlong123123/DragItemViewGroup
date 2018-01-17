@@ -16,6 +16,12 @@
 				<category android:name="android.intent.category.LAUNCHER"/>
 			</intent-filter>
 		</activity>
+		<activity android:name=".ListActivity"
+				  android:label="ListActivity">
+		</activity>
+		<activity android:name=".SimpleActivity"
+				  android:label="SimpleActivity">
+		</activity>
 	</application>
 
 </manifest>

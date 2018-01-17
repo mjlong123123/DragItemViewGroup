@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout
+	xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:app="http://schemas.android.com/apk/res-auto"
+	xmlns:tools="http://schemas.android.com/tools"
+	android:layout_width="match_parent"
+	android:layout_height="match_parent"
+	tools:context="com.dragon.scrollitemviewgroup.SimpleActivity">
+
+	<com.dragon.scrollitemviewgroup.DragItemViewGroup
+		android:id="@+id/mainLayout"
+		android:layout_width="0dp"
+		android:layout_height="wrap_content"
+		android:background="#f0000f"
+		app:layout_constraintBottom_toBottomOf="parent"
+		app:layout_constraintEnd_toEndOf="parent"
+		app:layout_constraintStart_toStartOf="parent"
+		app:layout_constraintTop_toTopOf="parent">
+
+		<TextView
+			android:id="@+id/mainItem"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:background="@color/colorPrimary"
+			android:gravity="center"
+			android:onClick="onClickItem"
+			android:padding="20dp"
+			android:text="main item"
+			android:textColor="#ffffffff"/>
+
+		<TextView
+			android:id="@+id/menuItem"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:background="@color/colorAccent"
+			android:gravity="center"
+			android:onClick="onClickMenu"
+			android:padding="20dp"
+			android:text="menu item"
+			android:textColor="#ffffffff"/>
+	</com.dragon.scrollitemviewgroup.DragItemViewGroup>
+</android.support.constraint.ConstraintLayout>

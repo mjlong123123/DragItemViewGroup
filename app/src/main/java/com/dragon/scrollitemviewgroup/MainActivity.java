@@ -1,9 +1,9 @@
 package com.dragon.scrollitemviewgroup;
 
-import android.support.v7.app.AppCompatActivity;
+import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
-import android.widget.ScrollView;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -11,13 +11,16 @@ public class MainActivity extends AppCompatActivity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
-		ScrollView scrollView;
 	}
 
-	public void onClickItem(View view){
-
+	public void onClickStartSimpleActivity(View view){
+		Intent intent = new Intent();
+		intent.setClass(this, SimpleActivity.class);
+		startActivity(intent);
 	}
-	public void onClickMenu(View view){
-
+	public void onClickStartListActivity(View view){
+		Intent intent = new Intent();
+		intent.setClass(this, ListActivity.class);
+		startActivity(intent);
 	}
 }

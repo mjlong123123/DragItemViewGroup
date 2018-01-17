@@ -39,7 +39,7 @@ public class DragItemViewGroup extends ViewGroup {
         childView = getChildAt(1);
         measureChild(childView, widthMeasureSpec, heightMeasureSpec);
 
-        super.onMeasure(widthMeasureSpec, heightMeasureSpec);
+        setMeasuredDimension(getDefaultSize(getSuggestedMinimumWidth(), widthMeasureSpec), childView.getMeasuredHeight());
     }
 
     @Override
