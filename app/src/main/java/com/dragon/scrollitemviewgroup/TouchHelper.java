@@ -39,10 +39,13 @@ public class TouchHelper {
         }
     };
 
+    PositionHelper positionHelper;
+
     public TouchHelper(ViewGroup view) {
         this.view = view;
         scroller = new Scroller(view.getContext());
         touchSlop = ViewConfiguration.get(view.getContext()).getScaledTouchSlop();
+        positionHelper = new PositionHelper2();
     }
 
     public boolean onInterceptTouchEvent(MotionEvent ev) {
@@ -79,8 +82,8 @@ public class TouchHelper {
                 lastX = currentX;
                 View mainView = view.getChildAt(0);
                 View menuView = view.getChildAt(1);
-                offsetX = checkBoundary(menuView, offsetX);
-                moveChild(mainView,menuView,(int)offsetX);
+                offsetX = positionHelper.checkBoundary(view, menuView, offsetX);
+                positionHelper.moveChild(mainView,menuView,(int)offsetX);
             }
                 break;
             case MotionEvent.ACTION_UP:
@@ -89,7 +92,7 @@ public class TouchHelper {
 
                 direct = (int) (currentX - downX);
                 View menuView = view.getChildAt(1);
-                scroller.startScroll(getCurrentPosition(menuView), 0, computeDx(view, menuView, direct), 0);
+                scroller.startScroll(positionHelper.getCurrentPosition(menuView), 0, positionHelper.computeDx(view, menuView, direct), 0);
                 handler.post(runnable);
             }
                 break;
@@ -101,33 +104,11 @@ public class TouchHelper {
             int x = scroller.getCurrX();
             View mainView = view.getChildAt(0);
             View menuView = view.getChildAt(1);
-            int offset = x - getCurrentPosition(menuView);
-            moveChild(mainView,menuView,offset);
+            int offset = x - positionHelper.getCurrentPosition(menuView);
+            positionHelper.moveChild(mainView,menuView,offset);
             handler.post(runnable);
         }
     }
 
 
-    private int checkBoundary(View menuView, float offsetX) {
-        if (offsetX + menuView.getLeft() > view.getRight()) {
-            offsetX = view.getRight() - menuView.getLeft();
-        } else if (offsetX + menuView.getRight() < view.getRight()) {
-            offsetX = view.getRight() - menuView.getRight();
-        }
-        return (int) offsetX;
-    }
-
-    private void moveChild(View mainView, View menuView, int offsetX){
-        mainView.offsetLeftAndRight(offsetX);
-        menuView.offsetLeftAndRight(offsetX);
-    }
-
-    private int computeDx(ViewGroup parentView, View menuView, int direct){
-        int dx = direct > 0 ? parentView.getRight() - menuView.getLeft() : parentView.getRight() - menuView.getRight();
-        return dx;
-    }
-
-    private int getCurrentPosition(View view){
-        return view.getLeft();
-    }
 }
