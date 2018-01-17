@@ -77,16 +77,10 @@ public class TouchHelper {
                 float currentX = event.getX();
                 float offsetX = currentX - lastX;
                 lastX = currentX;
-                View childView = view.getChildAt(1);
-                if (offsetX + childView.getLeft() > view.getRight()) {
-                    offsetX = view.getRight() - childView.getLeft();
-                } else if (offsetX + childView.getRight() < view.getRight()) {
-                    offsetX = view.getRight() - childView.getRight();
-                }
-                childView.offsetLeftAndRight((int) offsetX);
-                childView = view.getChildAt(0);
-                childView.offsetLeftAndRight((int) offsetX);
-
+                View mainView = view.getChildAt(0);
+                View menuView = view.getChildAt(1);
+                offsetX = checkBoundary(menuView, offsetX);
+                moveChild(mainView,menuView,(int)offsetX);
             }
                 break;
             case MotionEvent.ACTION_UP:
@@ -94,9 +88,8 @@ public class TouchHelper {
                 float currentX = event.getX();
 
                 direct = (int) (currentX - downX);
-                View childView = view.getChildAt(1);
-                int dx = direct > 0 ? view.getRight() - childView.getLeft() : view.getRight() - childView.getRight();
-                scroller.startScroll(childView.getLeft(), 0, dx, 0);
+                View menuView = view.getChildAt(1);
+                scroller.startScroll(getCurrentPosition(menuView), 0, computeDx(view, menuView, direct), 0);
                 handler.post(runnable);
             }
                 break;
@@ -106,12 +99,35 @@ public class TouchHelper {
     public void computeScroll() {
         if(scroller.computeScrollOffset()){
             int x = scroller.getCurrX();
-            View childView = view.getChildAt(1);
-            int offset = x - childView.getLeft();
-            childView.offsetLeftAndRight(offset);
-            childView = view.getChildAt(0);
-            childView.offsetLeftAndRight(offset);
+            View mainView = view.getChildAt(0);
+            View menuView = view.getChildAt(1);
+            int offset = x - getCurrentPosition(menuView);
+            moveChild(mainView,menuView,offset);
             handler.post(runnable);
         }
+    }
+
+
+    private int checkBoundary(View menuView, float offsetX) {
+        if (offsetX + menuView.getLeft() > view.getRight()) {
+            offsetX = view.getRight() - menuView.getLeft();
+        } else if (offsetX + menuView.getRight() < view.getRight()) {
+            offsetX = view.getRight() - menuView.getRight();
+        }
+        return (int) offsetX;
+    }
+
+    private void moveChild(View mainView, View menuView, int offsetX){
+        mainView.offsetLeftAndRight(offsetX);
+        menuView.offsetLeftAndRight(offsetX);
+    }
+
+    private int computeDx(ViewGroup parentView, View menuView, int direct){
+        int dx = direct > 0 ? parentView.getRight() - menuView.getLeft() : parentView.getRight() - menuView.getRight();
+        return dx;
+    }
+
+    private int getCurrentPosition(View view){
+        return view.getLeft();
     }
 }
