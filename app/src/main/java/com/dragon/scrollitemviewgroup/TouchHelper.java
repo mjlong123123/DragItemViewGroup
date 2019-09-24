@@ -1,7 +1,6 @@
 package com.dragon.scrollitemviewgroup;
 
 import android.os.Handler;
-import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewConfiguration;
@@ -9,31 +8,22 @@ import android.view.ViewGroup;
 import android.widget.Scroller;
 
 /**
- * Created by Administrator on 2018/1/16.
+ * Created by dragon
  */
 
 public class TouchHelper {
-
     float downX = 0;
-
     ViewGroup view;
-
-
     int touchSlop;
     boolean dragFlag;
     float lastX = 0;
-
     Scroller scroller;
-
     int direct = 0;
-
     Handler handler = new Handler();
-
     Runnable runnable = new Runnable() {
         @Override
         public void run() {
-            Log.e("dragon","running ---------------");
-            if(!scroller.isFinished()){
+            if (!scroller.isFinished()) {
                 computeScroll();
             }
         }
@@ -75,7 +65,6 @@ public class TouchHelper {
         switch (action) {
             case MotionEvent.ACTION_DOWN:
                 return false;
-//                break;
             case MotionEvent.ACTION_MOVE: {
                 float currentX = event.getX();
                 float offsetX = currentX - lastX;
@@ -83,32 +72,38 @@ public class TouchHelper {
                 View mainView = view.getChildAt(0);
                 View menuView = view.getChildAt(1);
                 offsetX = positionHelper.checkBoundary(view, menuView, offsetX);
-                positionHelper.moveChild(mainView,menuView,(int)offsetX);
+                positionHelper.moveChild(mainView, menuView, (int) offsetX);
             }
-                break;
+            break;
             case MotionEvent.ACTION_UP:
             case MotionEvent.ACTION_CANCEL: {
                 float currentX = event.getX();
-
                 direct = (int) (currentX - downX);
-                View menuView = view.getChildAt(1);
-                scroller.startScroll(positionHelper.getCurrentPosition(menuView), 0, positionHelper.computeDx(view, menuView, direct), 0);
-                handler.post(runnable);
+                smoothScroll(direct);
             }
-                break;
+            break;
         }
         return true;
     }
+
+    public void smoothScroll(int direct) {
+        View menuView = view.getChildAt(1);
+        int dx = positionHelper.computeDx(view, menuView, direct);
+        if (dx == 0) {
+            return;
+        }
+        scroller.startScroll(positionHelper.getCurrentPosition(menuView), 0, dx, 0);
+        handler.post(runnable);
+    }
+
     public void computeScroll() {
-        if(scroller.computeScrollOffset()){
+        if (scroller.computeScrollOffset()) {
             int x = scroller.getCurrX();
             View mainView = view.getChildAt(0);
             View menuView = view.getChildAt(1);
             int offset = x - positionHelper.getCurrentPosition(menuView);
-            positionHelper.moveChild(mainView,menuView,offset);
+            positionHelper.moveChild(mainView, menuView, offset);
             handler.post(runnable);
         }
     }
-
-
 }
