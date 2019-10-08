@@ -1,6 +1,7 @@
 package com.dragon.scrollitemviewgroup;
 
-import android.support.v7.widget.RecyclerView;
+import androidx.recyclerview.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -36,6 +37,7 @@ public class MyItemRecyclerViewAdapter extends RecyclerView.Adapter<MyItemRecycl
 
 	@Override
 	public void onBindViewHolder(final ViewHolder holder, int position) {
+        Log.e("dragon_ok","position "+position);
 		holder.mItem = mValues.get(position);
 		holder.mIdView.setText(title + " " + mValues.get(position).id);
 		holder.mContentView.setText(mValues.get(position).content);
